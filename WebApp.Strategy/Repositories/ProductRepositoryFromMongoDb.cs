@@ -10,7 +10,7 @@ namespace WebApp.Strategy.Repositories
     {
         private readonly IMongoCollection<Product> _productCollection;
 
-        public ProductRepositoryFromMongoDb(IConfiguration configuration, IMongoCollection<Product> productCollection)
+        public ProductRepositoryFromMongoDb(IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("MongoDb");
             var client = new MongoClient(connectionString);

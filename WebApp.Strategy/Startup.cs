@@ -1,6 +1,7 @@
 using BaseProject.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Strategy.Models;
+using WebApp.Strategy.Repositories;
 
 namespace BaseProject.Web
 {
@@ -25,6 +28,31 @@ namespace BaseProject.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // get service almaya çalýþtýðýmýz servis yok ise hata fýrlatmaz geriye null döner
+            // ama required der isek geriye  hata fýrlatýr o servis yok ise
+            services.AddScoped<IProductRepository>(sp =>
+            {
+                var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
+
+                var claim = httpContextAccessor.HttpContext.User.Claims.Where(x => x.Type == Settings.claimDatabaseType).FirstOrDefault();
+
+                var context = sp.GetRequiredService<Context>();
+                if (claim == null) return new ProductRepositoryFromSqlServer(context);
+
+                var databaseType = (EDatabaseType)int.Parse(claim.Value);
+
+                return databaseType switch
+                {
+                    EDatabaseType.SqlServer => new ProductRepositoryFromSqlServer(context),
+                    EDatabaseType.MongoDb => new ProductRepositoryFromMongoDb(Configuration),
+                    _ => throw new NotImplementedException()
+                };
+            });
+
+
+
+
+
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
