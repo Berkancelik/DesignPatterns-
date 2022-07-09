@@ -8,7 +8,7 @@ namespace WebApp.Strategy.Repositories
     {
         Task<Product> GetById(string id);
         Task<List<Product>> GetAllByUserId(string userId);  
-        Task Add(Product product);
+        Task<Product> Add(Product product);
         Task Update(Product product);  
         Task Delete(Product product);
     }
