@@ -32,7 +32,13 @@ namespace BaseProject.Web.Controllers
                 return View();
             }
             return RedirectToAction(nameof(HomeController.Index), "Home");
-          
+
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }
 }
