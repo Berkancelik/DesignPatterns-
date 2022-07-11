@@ -8,7 +8,7 @@ namespace WebApp.Template.UserCards
     {
         protected AppUser AppUser { get; set; }
 
-        public void SetUSer(AppUser appUser)
+        public void SetUser(AppUser appUser)
         {
             AppUser = appUser;
         }
