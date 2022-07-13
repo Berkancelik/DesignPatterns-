@@ -33,7 +33,6 @@ namespace WebApp.ChainOfResponsibility.Web.ChainOfResponsibility
             mailMessage.Subject = "Zip dosyası";
 
             mailMessage.Body = "<p>Zip dosyası ektedir.</p>";
-
             Attachment attachment = new Attachment(zipMemoryStream, _fileName, MediaTypeNames.Application.Zip);
 
             mailMessage.Attachments.Add(attachment);
