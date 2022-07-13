@@ -17,7 +17,7 @@ namespace BaseProject.Web
     {
         public static void Main(string[] args)
         {
-            var host =CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build();
 
             using var scope = host.Services.CreateScope();
 
@@ -25,7 +25,7 @@ namespace BaseProject.Web
 
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
-            context.Database.Migrate();
+            //context.Database.Migrate();
 
             if (!userManager.Users.Any())
             {

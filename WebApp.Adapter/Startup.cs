@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Adapter.Web.Services;
 
 namespace BaseProject.Web
 {
@@ -25,6 +26,8 @@ namespace BaseProject.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IImageProcess, ImageProcess>();
+
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
