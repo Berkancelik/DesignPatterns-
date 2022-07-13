@@ -19,7 +19,9 @@ namespace WebApp.ChainOfResponsibility.Web.ChainOfResponsibility
         public override object handle(object o)
         {
             var zipMemoryStream = o as MemoryStream;
+
             zipMemoryStream.Position = 0;
+
             var mailMessage = new MailMessage();
 
             var smptClient = new SmtpClient("srvm11.trwww.com");
@@ -37,7 +39,9 @@ namespace WebApp.ChainOfResponsibility.Web.ChainOfResponsibility
             mailMessage.Attachments.Add(attachment);
 
             mailMessage.IsBodyHtml = true;
+
             smptClient.Port = 587;
+
             smptClient.Credentials = new NetworkCredential("deneme@kariyersistem.com", "Password12*");
 
             smptClient.Send(mailMessage);

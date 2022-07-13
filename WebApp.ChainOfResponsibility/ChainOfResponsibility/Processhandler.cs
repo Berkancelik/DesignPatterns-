@@ -11,7 +11,6 @@
             }
             return null;
         }
-
         public IProcessHandler SetNext(IProcessHandler processHandler)
         {
             nextProcessHandler = processHandler;
