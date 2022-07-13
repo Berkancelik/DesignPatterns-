@@ -26,7 +26,9 @@ namespace BaseProject.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IImageProcess, ImageProcess>();
+            services.AddScoped<IAdvanceImageProcess, AdvanceImageProcess>();
+            //yeni nesne örneði adapter
+            services.AddScoped<IImageProcess, AdvanceImageProcessAdapter>();
 
             services.AddDbContext<Context>(options =>
             {
