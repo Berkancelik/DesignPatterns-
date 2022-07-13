@@ -6,7 +6,6 @@
         {
             return string.Empty;
         }
-
         protected override string SetPicture()
         {
             return $"<img class='card - img - top' src='/userpictures/uyedegil.jpeg'>";

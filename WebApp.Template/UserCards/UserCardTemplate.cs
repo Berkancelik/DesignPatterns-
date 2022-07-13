@@ -12,7 +12,6 @@ namespace WebApp.Template.UserCards
         {
             AppUser = appUser;
         }
-
         public string Build()
         {
             if(AppUser == null) throw new ArgumentNullException(nameof(AppUser));
@@ -28,7 +27,6 @@ namespace WebApp.Template.UserCards
             sb.Append(SetFooter());
             sb.Append("</div>");
             sb.Append("</div>");
-
             return sb.ToString();   
 
         }
