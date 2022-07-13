@@ -27,7 +27,6 @@ namespace WebApp.Template.UserCards
             sb.Append(SetFooter());
             sb.Append("</div>");
             sb.Append("</div>");
-
             return sb.ToString();   
 
         }
