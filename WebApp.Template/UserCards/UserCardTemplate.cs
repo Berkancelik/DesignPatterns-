@@ -12,7 +12,6 @@ namespace WebApp.Template.UserCards
         {
             AppUser = appUser;
         }
-
         public string Build()
         {
             if(AppUser == null) throw new ArgumentNullException(nameof(AppUser));
