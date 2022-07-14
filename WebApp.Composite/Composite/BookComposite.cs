@@ -41,7 +41,6 @@ namespace WebApp.Composite.Composite
             sb.Append($"<div class='text-primary my-1'><a href='#' class='menu'>   {Name} ({Count()}) </a></div>");
 
             if (!_components.Any()) return sb.ToString();
-
             sb.Append("<ul class='list-group list-group-flush ms-3'>");
 
             foreach (var item in _components)
