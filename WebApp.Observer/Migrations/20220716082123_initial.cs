@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BaseProject.Web.Migrations
+namespace WebApp.Observer.Web.Migrations
 {
     public partial class initial : Migration
     {
@@ -44,6 +44,20 @@ namespace BaseProject.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Discounts",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rate = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Discounts", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,6 +222,9 @@ namespace BaseProject.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Discounts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
