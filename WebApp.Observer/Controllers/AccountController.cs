@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Observer.Web.Models;
+using WebApp.Observer.Web.Observer;
 
 namespace BaseProject.Web.Controllers
 {
@@ -11,11 +12,13 @@ namespace BaseProject.Web.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserObserverSubject _userObserverSubjcect;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, UserObserverSubject userObserverSubjcect)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userObserverSubjcect = userObserverSubjcect;
         }
 
         public IActionResult Login()
@@ -60,7 +63,7 @@ namespace BaseProject.Web.Controllers
 
             if (identityResult.Succeeded)
             {
-            
+                _userObserverSubjcect.NotifyObservers(appUser);          
 
                 ViewBag.message = "Üyelik işlemi başarıyla gerçekleşti.";
             }

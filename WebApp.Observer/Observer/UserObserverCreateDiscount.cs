@@ -18,7 +18,10 @@ namespace WebApp.Observer.Web.Observer
         {
             var logger = _serviceProvider.GetRequiredService<ILogger<UserObserverCreateDiscount>>();
 
-            var context = _serviceProvider.GetRequiredService<Context>();
+
+            using var scope = _serviceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<Context>();
+
             context.Discounts.Add(new Models.Discount { Rate = 10, UserId = appUser.Id });
             context.SaveChanges();
             logger.LogInformation("Discount Created");
