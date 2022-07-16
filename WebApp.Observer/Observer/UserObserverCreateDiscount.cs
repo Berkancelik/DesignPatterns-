@@ -17,8 +17,6 @@ namespace WebApp.Observer.Web.Observer
         public void UserCreated(AppUser appUser)
         {
             var logger = _serviceProvider.GetRequiredService<ILogger<UserObserverCreateDiscount>>();
-
-
             using var scope = _serviceProvider.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<Context>();
 
