@@ -21,7 +21,7 @@ namespace WebApp.Observer.Web.Observer
             var context = _serviceProvider.GetRequiredService<Context>();
             context.Discounts.Add(new Models.Discount { Rate = 10, UserId = appUser.Id });
             context.SaveChanges();
-            logger.LogInformation("Discount Created")
+            logger.LogInformation("Discount Created");
 
             throw new System.NotImplementedException();
         }
