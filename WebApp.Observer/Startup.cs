@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Observer.Web.Observer;
 
 namespace BaseProject.Web
 {
@@ -25,6 +26,15 @@ namespace BaseProject.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<UserObserverSubject>(sp =>
+            {
+                UserObserverSubject userObserverSubject = new();
+                userObserverSubject.RegisterObserver(new UserObserverWriteToConsole(sp));
+                userObserverSubject.RegisterObserver(new UserObserverCreateDiscount(sp));
+                userObserverSubject.RegisterObserver(new UserObserverSendEmail(sp));
+
+                return userObserverSubject;
+            });
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));

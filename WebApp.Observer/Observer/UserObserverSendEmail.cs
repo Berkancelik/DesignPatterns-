@@ -16,7 +16,7 @@ namespace WebApp.Observer.Web.Observer
             _serviceProvider = serviceProvider;
         }
 
-        public void CreateUSer(AppUser appUser)
+        public void UserCreated(AppUser appUser)
         {
             var logger = _serviceProvider.GetRequiredService<ILogger<UserObserverSendEmail>>();
 
