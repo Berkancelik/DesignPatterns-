@@ -30,23 +30,32 @@ namespace BaseProject.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
-            services.AddScoped<IProductRepository>(sp =>
-            {
-                var context = sp.GetRequiredService<Context>();
-                var memoryCache = sp.GetRequiredService<IMemoryCache>();
-                var productRepository = new ProductRepository(context);
-                var logService = sp.GetRequiredService<ILogger<ProdcutRepositoryLoggingDecorator>>();
-
-                var cacheDecorator = new ProdcutRepositoryCacheDecorator(productRepository, memoryCache);
 
 
-                var logDecoretor = new ProdcutRepositoryLoggingDecorator( cacheDecorator, logService);
+            //2. Yol
+            services.AddScoped<IProductRepository, ProductRepository>().Decorate<IProductRepository, ProdcutRepositoryCacheDecorator>().Decorate<IProductRepository,ProdcutRepositoryLoggingDecorator>();
 
 
 
 
-                return cacheDecorator; 
-            });
+            // 1. Yol
+            //services.AddScoped<IProductRepository>(sp =>
+            //{
+            //    var context = sp.GetRequiredService<Context>();
+            //    var memoryCache = sp.GetRequiredService<IMemoryCache>();
+            //    var productRepository = new ProductRepository(context);
+            //    var logService = sp.GetRequiredService<ILogger<ProdcutRepositoryLoggingDecorator>>();
+
+            //    var cacheDecorator = new ProdcutRepositoryCacheDecorator(productRepository, memoryCache);
+
+
+            //    var logDecoretor = new ProdcutRepositoryLoggingDecorator( cacheDecorator, logService);
+
+
+
+
+            //    return cacheDecorator; 
+            //});
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
