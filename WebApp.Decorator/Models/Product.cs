@@ -9,7 +9,7 @@ namespace WebApp.Decorator.Models
         [Column(TypeName ="decimal(18,2)")]
         public  decimal Price { get; set; }
         public int Stock { get; set; }
-        public string UserID { get; set; }
+        public string UserId { get; set; }
 
     }
 }

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Decorator.Repositories;
 
 namespace BaseProject.Web
 {
@@ -25,6 +26,7 @@ namespace BaseProject.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IProductrepository, Productrepository>();
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));

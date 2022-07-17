@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebApp.Decorator.Models;
 
-namespace WebApp.Decorator.Models
+namespace WebApp.Decorator.Repositories
 {
     public interface IProductrepository
     {
