@@ -8,6 +8,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,16 @@ namespace BaseProject.Web
                 var context = sp.GetRequiredService<Context>();
                 var memoryCache = sp.GetRequiredService<IMemoryCache>();
                 var productRepository = new ProductRepository(context);
+                var logService = sp.GetRequiredService<ILogger<ProdcutRepositoryLoggingDecorator>>();
+
                 var cacheDecorator = new ProdcutRepositoryCacheDecorator(productRepository, memoryCache);
+
+
+                var logDecoretor = new ProdcutRepositoryLoggingDecorator( cacheDecorator, logService);
+
+
+
+
                 return cacheDecorator; 
             });
             services.AddDbContext<Context>(options =>
