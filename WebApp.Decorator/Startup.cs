@@ -1,6 +1,7 @@
 using BaseProject.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -30,13 +31,7 @@ namespace BaseProject.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
-
-
-            //2. Yol
-            services.AddScoped<IProductRepository, ProductRepository>().Decorate<IProductRepository, ProdcutRepositoryCacheDecorator>().Decorate<IProductRepository,ProdcutRepositoryLoggingDecorator>();
-
-
-
+            services.AddHttpContextAccessor();
 
             // 1. Yol
             //services.AddScoped<IProductRepository>(sp =>
@@ -51,11 +46,38 @@ namespace BaseProject.Web
 
             //    var logDecoretor = new ProdcutRepositoryLoggingDecorator( cacheDecorator, logService);
 
-
-
-
             //    return cacheDecorator; 
             //});
+
+
+            ////2. Yol
+            //services.AddScoped<IProductRepository, ProductRepository>().Decorate<IProductRepository, ProdcutRepositoryCacheDecorator>().Decorate<IProductRepository, ProdcutRepositoryLoggingDecorator>();
+
+
+            // 3. Yol (Runtime)
+            services.AddScoped<IProductRepository>(sp =>
+            {
+                var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
+
+                var context = sp.GetRequiredService<Context>();
+                var memoryCache = sp.GetRequiredService<IMemoryCache>();
+                var productRepository = new ProductRepository(context);
+                var logService = sp.GetRequiredService<ILogger<ProdcutRepositoryLoggingDecorator>>();
+
+                if(httpContextAccessor.HttpContext.User.Identity.Name == "user1")
+                {
+                    var cacheDecorator = new ProdcutRepositoryCacheDecorator(productRepository, memoryCache);
+                    return cacheDecorator;
+                }
+
+                var logDecoretor = new ProdcutRepositoryLoggingDecorator(productRepository, logService);
+
+                return logDecoretor;
+            });
+
+
+
+
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
