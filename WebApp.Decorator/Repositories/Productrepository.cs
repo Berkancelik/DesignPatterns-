@@ -11,7 +11,11 @@ namespace WebApp.Decorator.Repositories
     {
         private readonly Context _context;
 
-     
+        public ProductRepository(Context context)
+        {
+            _context = context;
+        }
+
         public async Task<List<Product>> GetAll()
         {
             return await _context.Products.ToListAsync();

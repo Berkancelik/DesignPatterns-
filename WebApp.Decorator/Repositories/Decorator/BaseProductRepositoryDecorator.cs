@@ -13,12 +13,12 @@ namespace WebApp.Decorator.Repositories.Decorator
             _productRepository = productRepository;
         }
 
-        public async Task<List<Product>> GetAll()
+        public virtual async Task<List<Product>> GetAll()
         {
             return await _productRepository.GetAll();
         }
 
-        public async Task<List<Product>> GetAll(string userId)
+        public virtual async Task<List<Product>> GetAll(string userId)
         {
             return await _productRepository.GetAll(userId);
         }
@@ -38,7 +38,7 @@ namespace WebApp.Decorator.Repositories.Decorator
             return await _productRepository.Save(product);
         }
 
-        public async Task Update(Product product)
+        public virtual async Task Update(Product product)
         {
             await _productRepository.Update(product);
         }

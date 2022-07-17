@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Decorator.Repositories;
+using WebApp.Decorator.Repositories.Decorator;
 
 namespace BaseProject.Web
 {
@@ -26,7 +28,15 @@ namespace BaseProject.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IProductRepository, IProductRepository>();
+            services.AddMemoryCache();
+            services.AddScoped<IProductRepository>(sp =>
+            {
+                var context = sp.GetRequiredService<Context>();
+                var memoryCache = sp.GetRequiredService<IMemoryCache>();
+                var productRepository = new ProductRepository(context);
+                var cacheDecorator = new ProdcutRepositoryCacheDecorator(productRepository, memoryCache);
+                return cacheDecorator; 
+            });
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
