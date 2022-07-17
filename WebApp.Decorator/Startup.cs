@@ -26,7 +26,7 @@ namespace BaseProject.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IProductrepository, Productrepository>();
+            services.AddScoped<IProductRepository, IProductRepository>();
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));

@@ -4,7 +4,7 @@ using WebApp.Decorator.Models;
 
 namespace WebApp.Decorator.Repositories
 {
-    public interface IProductrepository
+    public interface IProductRepository
     {
         Task<Product> GetById(int id);
         Task<List<Product>> GetAll();

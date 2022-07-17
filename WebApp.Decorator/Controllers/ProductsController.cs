@@ -16,9 +16,9 @@ namespace WebApp.Decorator.Controllers
     [Authorize]
     public class ProductsController : Controller
     {
-        IProductrepository _productRepository;
+        IProductRepository _productRepository;
 
-        public ProductsController(IProductrepository productrepository)
+        public ProductsController(IProductRepository productrepository)
         {
             _productRepository = productrepository;
         }

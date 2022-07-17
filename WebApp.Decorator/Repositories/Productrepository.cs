@@ -7,7 +7,7 @@ using WebApp.Decorator.Models;
 
 namespace WebApp.Decorator.Repositories
 {
-    public class Productrepository : IProductrepository
+    public class ProductRepository : IProductRepository
     {
         private readonly Context _context;
 
