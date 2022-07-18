@@ -1,4 +1,6 @@
 using BaseProject.Web.Models;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +27,8 @@ namespace BaseProject.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));

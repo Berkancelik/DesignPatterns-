@@ -6,12 +6,12 @@ namespace WebApp.Command.Commands
 {
     public class FileCreateInvoker
     {
-        private  ITableActionCommand _actionCommand;
+        private ITableActionCommand _tableActionCommand;
         private List<ITableActionCommand> tableActionCommands = new List<ITableActionCommand>();
 
         public void SetCommand(ITableActionCommand tableActionCommand)
         {
-            _actionCommand = tableActionCommand;
+            _tableActionCommand = tableActionCommand;
         }
 
         public void AddCommand(ITableActionCommand tableActionCommand)
@@ -19,9 +19,14 @@ namespace WebApp.Command.Commands
             tableActionCommands.Add(tableActionCommand);
         }
 
-        public List<IActionResult> CreateFile()
+        public IActionResult CreateFile()
         {
-             return tableActionCommands.Select(x => x.Execute()).ToList();
+            return _tableActionCommand.Execute();
+        }
+
+        public List<IActionResult> CreateFiles()
+        {
+            return tableActionCommands.Select(x => x.Execute()).ToList();
         }
     }
 }

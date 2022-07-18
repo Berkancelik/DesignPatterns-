@@ -10,17 +10,47 @@ using WebApp.Command.Models;
 
 namespace WebApp.Command.Controllers
 {
-    public class ProductController : Controller
+    public class ProductsController : Controller
     {
         private readonly Context _context;
-public ProductController(Context context)
+
+        public ProductsController(Context context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View( await _context.Products.ToListAsync());
+            return View(await _context.Products.ToListAsync());
+        }
+
+        public async Task<IActionResult> CreateFile(int type)
+        {
+            var products = await _context.Products.ToListAsync();
+
+            FileCreateInvoker fileCreateInvoker = new();
+
+            EFileType fileType = (EFileType)type;
+
+            switch (fileType)
+            {
+                case EFileType.Excel:
+                    ExcelFile<Product> excelFile = new(products);
+
+                    fileCreateInvoker.SetCommand(new CreateExcelTableActionCommand<Product>(excelFile));
+
+                    break;
+
+                case EFileType.Pdf:
+                    PdfFile<Product> pdfFile = new(products, HttpContext);
+                    fileCreateInvoker.SetCommand(new CreatePdfTableActionCommand<Product>(pdfFile));
+                    break;
+
+                default:
+                    break;
+            }
+
+            return fileCreateInvoker.CreateFile();
         }
 
         public async Task<IActionResult> CreateFiles()
@@ -33,7 +63,7 @@ public ProductController(Context context)
             fileCreateInvoker.AddCommand(new CreateExcelTableActionCommand<Product>(excelFile));
             fileCreateInvoker.AddCommand(new CreatePdfTableActionCommand<Product>(pdfFile));
 
-            var filesResult = fileCreateInvoker.CreateFile();
+            var filesResult = fileCreateInvoker.CreateFiles();
 
             using (var zipMemoryStream = new MemoryStream())
             {
