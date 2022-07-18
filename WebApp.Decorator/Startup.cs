@@ -49,7 +49,6 @@ namespace BaseProject.Web
             //    return cacheDecorator; 
             //});
 
-
             ////2. Yol
             //services.AddScoped<IProductRepository, ProductRepository>().Decorate<IProductRepository, ProdcutRepositoryCacheDecorator>().Decorate<IProductRepository, ProdcutRepositoryLoggingDecorator>();
 
