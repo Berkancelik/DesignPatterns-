@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Command.Models;
 
 namespace BaseProject.Web
 {
@@ -17,7 +18,7 @@ namespace BaseProject.Web
     {
         public static void Main(string[] args)
         {
-            var host =CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build();
 
             using var scope = host.Services.CreateScope();
 
@@ -34,6 +35,14 @@ namespace BaseProject.Web
                 userManager.CreateAsync(new AppUser() { UserName = "user3", Email = "user3@outlook.com" }, "Password12*").Wait();
                 userManager.CreateAsync(new AppUser() { UserName = "user4", Email = "user4@outlook.com" }, "Password12*").Wait();
                 userManager.CreateAsync(new AppUser() { UserName = "user5", Email = "user5@outlook.com" }, "Password12*").Wait();
+
+
+
+                Enumerable.Range(1, 30).ToList().ForEach(x =>
+                {
+                    context.Products.Add(new Product() { Name = $"kalem {x}", Price = x * 100, Stock = x + 50 });
+                });
+                context.SaveChanges();
             }
 
             host.Run();
