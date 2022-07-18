@@ -26,6 +26,7 @@ namespace WebApp.Command.Commands
         public MemoryStream Create()
         {
             var type = typeof(T);
+
             var sb = new StringBuilder();
 
             sb.Append($@"<html>
@@ -40,6 +41,7 @@ namespace WebApp.Command.Commands
                 sb.Append($"<th>{x.Name}</th>");
             });
             sb.Append("</tr>");
+
             _list.ForEach(x =>
             {
                 var values = type.GetProperties().Select(properyInfo => properyInfo.GetValue(x, null)).ToList();
