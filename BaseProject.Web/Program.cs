@@ -25,7 +25,6 @@ namespace BaseProject.Web
 
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
-            context.Database.Migrate();
 
             if (!userManager.Users.Any())
             {
