@@ -193,7 +193,6 @@ namespace WebApp.Template.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
         }
-
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
