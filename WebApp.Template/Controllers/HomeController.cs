@@ -22,9 +22,9 @@ namespace BaseProject.Web.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View( await _userManager.Users.ToListAsync());
         }
 
         public async Task<IActionResult> Privacy()
